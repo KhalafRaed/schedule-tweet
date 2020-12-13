@@ -1,13 +1,19 @@
 import React from "react";
 
 import './App.scss';
-import Header from "components/Header";
+import {Route, Switch} from "react-router-dom";
+import PrivateRoute from "components/shared/PrivateRoute";
+import Auth from "components/Auth";
+import Dashboard from "components/Dashboard";
+import NotFoundPage from "components/shared/NotFoundPage";
 
 function App() {
   return (
-      <div className="App">
-        <Header />
-      </div>
+      <Switch>
+        <PrivateRoute path="/Dashboard" component={Dashboard} />
+        <Route path="/auth" component={Auth}/>
+        <Route path="/*" component={NotFoundPage} />
+      </Switch>
   );
 }
 
