@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +12,13 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link as RouterLink } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Classnames from "classnames";
+import {loginAction} from "../actions";
+import {isLoadingSelector} from "../selectors";
 
+import './Login.scss';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,17 +40,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default () => {
+const Login = ({ isLoading, loginAction }) => {
 
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+    loginAction({email, password});
   };
 
   return (
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className="login-container">
+        <CircularProgress color="secondary" className={Classnames('spinner', {'loading': isLoading})} />
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -52,7 +62,7 @@ export default () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
+          <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
             <TextField
                 variant="outlined"
                 margin="normal"
@@ -63,6 +73,7 @@ export default () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => setEmail(e.target?.value)}
             />
             <TextField
                 variant="outlined"
@@ -74,11 +85,13 @@ export default () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => setPassword(e.target?.value)}
             />
             <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
             />
+
             <Button
                 type="submit"
                 fullWidth
@@ -95,9 +108,9 @@ export default () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/auth/sign-up">
+                <RouterLink to="/auth/sign-up">
                   Don't have an account? Sign Up
-                </Link>
+                </RouterLink>
               </Grid>
             </Grid>
           </form>
@@ -105,3 +118,9 @@ export default () => {
       </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  isLoading: isLoadingSelector(state)
+});
+
+export default connect(mapStateToProps, { loginAction })(Login);

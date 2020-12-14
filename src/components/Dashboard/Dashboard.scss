@@ -1,0 +1,22 @@
+.dashboard-container {
+  height: 100vh;
+  display: flex;
+
+  .tweeter-account{
+    height: 100%;
+    width: 20%;
+  }
+
+  .tweeter-body {
+    width: 80%;
+    height: 100%;
+    .schedule-tweet {
+      height: 30%;
+      width: 100%;
+    }
+    .tweets-container {
+      height: 70%;
+      width: 100%;
+    }
+  }
+}

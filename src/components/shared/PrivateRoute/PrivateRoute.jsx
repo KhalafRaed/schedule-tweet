@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import {isLoggedIn} from "../../Auth/utils";
 
-// TODO add real auth check
 const PrivateRoute = ({ component: RenderedComponent, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            2 === 1 ? (
+            isLoggedIn() ? (
                 <RenderedComponent {...props} />
             ) : (
                 <Redirect
                     to={{
-                      pathname: "/login",
+                      pathname: "/auth/login",
                       state: { from: props.location }
                     }}
                 />
