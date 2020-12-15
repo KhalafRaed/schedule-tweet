@@ -20,6 +20,8 @@ export default (state= initialState, action) => {
     case AT.FETCH_USER_FAILED:
       console.error(action.payload)
       return {...state};
+    case AT.DELETE_SCHEDULED_TWEET:
+      return {...state, isLoading: true};
     case AT.FETCH_USER_SUCCESS:
       const twitterAccounts = action?.payload?.twitterAccounts;
       const activeTweeterAccount = twitterAccounts ? twitterAccounts[0] : {};
@@ -28,7 +30,7 @@ export default (state= initialState, action) => {
       const latestTweets = action?.payload;
       return {...state, latestTweets};
     case AT.FETCH_SCHEDULED_TWEETS_SUCCESS:
-      const scheduledTweets = action?.payload;
+      const scheduledTweets = action.payload?.sort((a, b) => new Date(a?.tweetTime) - new Date(b?.tweetTime));
       return {...state, scheduledTweets, isLoading: false};
     case AT.CHANGE_ACTIVE_ACCOUNT:
       return {...state, activeTweeterAccount: action.payload};
