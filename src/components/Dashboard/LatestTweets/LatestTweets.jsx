@@ -13,7 +13,7 @@ const LatestTweets = ({ latestTweets }) => {
         Latest Tweets
       </div>
       {
-        latestTweets?.map(tweet => <LatestTweet key={tweet?.created_at} tweet={tweet} />)
+        latestTweets?.map((tweet, index) => <LatestTweet key={index + " " + tweet?.created_at} tweet={tweet} />)
       }
       <div>
         {latestTweets?.length === 0 && 'No Latest Tweets'}

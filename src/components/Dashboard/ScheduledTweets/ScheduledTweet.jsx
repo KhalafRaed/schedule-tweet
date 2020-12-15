@@ -1,16 +1,35 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import './ScheduledTweets.scss';
 import Fab from "@material-ui/core/Fab";
-import {deleteScheduledTweet} from "../actions";
+import {deleteScheduledTweet, fetchInitialData} from "../actions";
 
-const ScheduledTweet = ({ tweet, deleteScheduledTweet }) => {
+const ScheduledTweet = ({ tweet, deleteScheduledTweet, fetchInitialData }) => {
 
   const handleDeleteTweet = () => {
     deleteScheduledTweet(tweet);
   };
+
+  useEffect(() => {
+
+    const tweetTime = new Date(tweet?.tweetTime).getTime();
+    const now = new Date().getTime();
+
+    const beforeTweet = tweetTime - now;
+
+    console.log("still = ", beforeTweet);
+
+    if (beforeTweet > 0) {
+      const timeoutId = setTimeout(() => {
+        fetchInitialData();
+      });
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, []);
 
   return (
       <div className="latest-tweet">
@@ -18,17 +37,20 @@ const ScheduledTweet = ({ tweet, deleteScheduledTweet }) => {
           <div className="header">
             <div className="owner">
               <div className="owner-img">
-                <img src={tweet?.twitterProfilePictureHttps ?? "https://www.blexar.com/avatar.png"} />
+                <img src={tweet?.twitterProfilePictureHttps} />
               </div>
               {tweet?.twitterFullName}
             </div>
             <div className="created_at">
-              {tweet?.tweetTime}
+              {new Date(tweet?.tweetTime).toUTCString()}
             </div>
           </div>
-          <div className="img">
-            <img src={tweet?.tweetImageLink ?? "https://www.blexar.com/avatar.png"} />
-          </div>
+          {
+             tweet?.tweetImageLink &&
+             <div className="img">
+               <img src={tweet?.tweetImageLink} />
+             </div>
+          }
           <div className="tweet-text">
             {tweet?.tweetText}
           </div>
@@ -42,4 +64,4 @@ const ScheduledTweet = ({ tweet, deleteScheduledTweet }) => {
   )
 }
 
-export default connect(null, { deleteScheduledTweet })(ScheduledTweet);
+export default connect(null, { deleteScheduledTweet, fetchInitialData })(ScheduledTweet);

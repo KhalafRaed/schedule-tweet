@@ -3,7 +3,7 @@ import * as AT from './actionTypes';
 const initialState = {
   user: {},
   isLoading: false,
-  activeTweeterAccount: {},
+  activeTweeterAccount: undefined,
   accounts: [],
   latestTweets: [],
   scheduledTweets: [],
@@ -23,9 +23,13 @@ export default (state= initialState, action) => {
     case AT.DELETE_SCHEDULED_TWEET:
       return {...state, isLoading: true};
     case AT.FETCH_USER_SUCCESS:
-      const twitterAccounts = action?.payload?.twitterAccounts;
-      const activeTweeterAccount = twitterAccounts ? twitterAccounts[0] : {};
-      return {...state, user: action.payload, activeTweeterAccount, accounts: twitterAccounts};
+      const currentActiveTwitterAccount = state.activeTweeterAccount;
+      if (currentActiveTwitterAccount === undefined || currentActiveTwitterAccount === null ) {
+        const twitterAccounts = action?.payload?.twitterAccounts;
+        const activeTweeterAccount = twitterAccounts ? twitterAccounts[0] : {};
+        return {...state, user: action.payload, activeTweeterAccount, accounts: twitterAccounts};
+      }
+      return {...state};
     case AT.FETCH_LATEST_TWEETS_SUCCESS:
       const latestTweets = action?.payload;
       return {...state, latestTweets};

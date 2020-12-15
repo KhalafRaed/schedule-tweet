@@ -6,14 +6,17 @@ const LatestTweet = ({ tweet }) => {
   return (
       <div className="latest-tweet">
         <div className="content">
-          <div className="img">
-            <img src={tweet?.imageURL ?? "https://www.blexar.com/avatar.png"} />
-          </div>
+          {
+            tweet?.imageURL &&
+            <div className="img">
+              <img src={tweet?.imageURL} />
+            </div>
+          }
           <div className="tweet-text">
             {tweet?.text}
           </div>
         </div>
-        <div>
+        <div className="stats">
           <div className="fav-count">
             fav => {tweet?.favorite_count}
           </div>
@@ -21,7 +24,7 @@ const LatestTweet = ({ tweet }) => {
             Retweets => {tweet?.retweet_count}
           </div>
           <div className="created_at">
-            {tweet?.created_at}
+            {new Date(tweet?.created_at).toUTCString()}
           </div>
         </div>
       </div>

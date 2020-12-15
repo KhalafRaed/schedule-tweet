@@ -7,7 +7,7 @@ import {activeAccountSelector, userSelector} from "../selectors";
 import {TOKEN_LS_KEY} from "../../Auth/constants";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {addNewTwitterAccount, changeActiveAccount, deleteAccount} from "../actions";
+import {addNewTwitterAccount, changeActiveAccount, deleteAccount, fetchInitialData} from "../actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
@@ -98,7 +98,7 @@ const AddAccount = ({ visible, onClose, submit}) => {
   );
 }
 
-const Accounts = ({ user, addNewTwitterAccount, deleteAccount, changeActiveAccount }) => {
+const Accounts = ({ user, activeAccount, addNewTwitterAccount, deleteAccount, changeActiveAccount, fetchInitialData }) => {
 
   const history = useHistory();
 
@@ -111,6 +111,7 @@ const Accounts = ({ user, addNewTwitterAccount, deleteAccount, changeActiveAccou
 
   const handleAccountChange = (account) => {
     changeActiveAccount(account);
+    fetchInitialData();
   };
 
   const handleRemoveAccount = (account) => {
@@ -159,9 +160,10 @@ const Accounts = ({ user, addNewTwitterAccount, deleteAccount, changeActiveAccou
                           Remove
                         </Button>
                         <Button onClick={() => handleAccountChange(account)}
+                                disabled={activeAccount?.twitterID === account?.twitterID}
                                 variant="contained"
                                 color="primary">
-                          Select
+                          {activeAccount?.twitterID === account?.twitterID ? "Selected" : "Select"}
                         </Button>
                       </div>
                   </div>
@@ -191,4 +193,4 @@ const mapStateToProps = state => ({
   activeAccount: activeAccountSelector(state)
 });
 
-export default connect(mapStateToProps, { addNewTwitterAccount, deleteAccount, changeActiveAccount })(Accounts);
+export default connect(mapStateToProps, { addNewTwitterAccount, deleteAccount, changeActiveAccount, fetchInitialData })(Accounts);

@@ -94,7 +94,7 @@ function* createTweet({ payload }) {
   }
 
   const date = new Date(reqBody.tweetTime);
-  reqBody.tweetTime = date.getFullYear() +"-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  reqBody.tweetTime = date.getFullYear() +"-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " " + date.getHours() + ":" + date.getMinutes() + ":00";
 
   const response = yield call(doPost, {url: scheduleTweetEndpoint, payload: reqBody, headers: {}, options: {}, baseUrl: BASE_URL});
   yield put(fetchInitialData());
