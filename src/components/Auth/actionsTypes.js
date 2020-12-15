@@ -1,8 +1,8 @@
 const prefix = "auth";
 
 export const LOGIN_ACTION = `${prefix}/LOGIN`;
-export const LOGIN_SUCCESS = `${prefix}/LOGIN`;
-export const LOGIN_FAILURE = `${prefix}/LOGIN`;
+export const LOGIN_SUCCESS = `${prefix}/LOGIN-SUCCESS`;
+export const LOGIN_FAILURE = `${prefix}/LOGIN-FAILURE`;
 
 export const SIGN_UP_ACTION = `${prefix}/SIGN_UP`;
 export const SIGN_UP_SUCCESS = `${prefix}/SIGN_UP_SUCCESS`;

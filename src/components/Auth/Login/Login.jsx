@@ -17,6 +17,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Classnames from "classnames";
 import {loginAction} from "../actions";
 import {isLoadingSelector} from "../selectors";
+import {useHistory} from "react-router-dom";
 
 import './Login.scss';
 
@@ -45,10 +46,11 @@ const Login = ({ isLoading, loginAction }) => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginAction({email, password});
+    loginAction({email, password, history});
   };
 
   return (

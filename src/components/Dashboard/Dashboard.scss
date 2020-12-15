@@ -5,11 +5,15 @@
   .tweeter-account{
     height: 100%;
     width: 20%;
+    border-right: 1px solid #cbcbcb;
+    padding: 20px;
   }
 
   .tweeter-body {
     width: 80%;
-    height: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 10px 25px;
     .schedule-tweet {
       height: 30%;
       width: 100%;
@@ -17,6 +21,17 @@
     .tweets-container {
       height: 70%;
       width: 100%;
+      display: flex;
+
+      .scheduled-tweets {
+        width: 50%;
+        height: 100%;
+      }
+
+      .latest-tweets-container {
+        width: 50%;
+        height: 100%;
+      }
     }
   }
 }

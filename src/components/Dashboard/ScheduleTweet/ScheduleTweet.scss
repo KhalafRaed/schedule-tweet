@@ -6,3 +6,11 @@
     margin: 10px 20px;
   }
 }
+
+.tweet-container {
+  display: flex;
+  flex-flow: column;
+  height: 300px;
+  justify-content: space-around;
+  width: 400px;
+}
