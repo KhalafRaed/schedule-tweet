@@ -29,3 +29,13 @@ export const loginFailure = (payload) => ({
   type: AT.LOGIN_FAILURE,
   payload
 });
+
+export const confirmAction = (payload) => ({
+  type: AT.CONFIRM_ACCOUNT,
+  payload
+});
+
+export const confirmSuccess = (payload) => ({
+  type: AT.CONFIRM_ACCOUNT_SUCCESS,
+  payload
+});

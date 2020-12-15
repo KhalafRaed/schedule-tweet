@@ -20,6 +20,8 @@ export default (state = initialState, action) => {
       return {...state, isLoading: false};
     case AT.SIGN_UP_SUCCESS:
       return {...state, isLoading: false};
+    case AT.CONFIRM_ACCOUNT:
+      return {...state, isLoading: true}
     default:
       return state;
   }

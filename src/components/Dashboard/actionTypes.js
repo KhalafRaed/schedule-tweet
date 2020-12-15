@@ -20,3 +20,5 @@ export const CHANGE_ACTIVE_ACCOUNT = `${prefix}/change-active-account`;
 
 export const DELETE_SCHEDULED_TWEET = `${prefix}/remove-scheduled-tweet`;
 export const SCHEDULE_TWEET = `${prefix}/schedule-tweet`;
+export const ERROR_MESSAGE = `${prefix}/error-message`;
+export const ERROR_MESSAGE_CLEAR = `${prefix}/error-message-clear`;

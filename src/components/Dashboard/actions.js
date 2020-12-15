@@ -63,3 +63,12 @@ export const scheduleTweet = (payload) => ({
   type: AT.SCHEDULE_TWEET,
   payload
 });
+
+export const errorMessage = (payload) => ({
+  type: AT.ERROR_MESSAGE,
+  payload
+});
+
+export const clearMessage = () => ({
+  type: AT.ERROR_MESSAGE_CLEAR
+});

@@ -15,6 +15,9 @@ const LatestTweets = ({ scheduledTweets }) => {
         {
           scheduledTweets?.map(tweet => <ScheduledTweet key={tweet?.uuid} tweet={tweet} />)
         }
+        <div>
+          {scheduledTweets?.length === 0 && 'No Scheduled Tweets'}
+        </div>
       </div>
   );
 };

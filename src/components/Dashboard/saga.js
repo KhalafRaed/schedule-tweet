@@ -16,7 +16,7 @@ function* getUser() {
 
   const response = yield call(doPost, {url: getUserEndpoint, payload: requestBody, headers: {}, options: {}, baseUrl: BASE_URL});
 
-  yield put(fetchUserSuccess(response?.data));
+  yield put(fetchUserSuccess(response?.data?.body));
   yield put(fetchLatestTweets());
 }
 
@@ -34,10 +34,11 @@ function* getLatestTweets() {
 
     const response = yield call(doPost, {url: getLatestTweetsEndpoint, payload: reqBody, headers: {}, options: {}, baseUrl: BASE_URL});
 
-    yield put(fetchLatestTweetsSuccess(response?.data));
+    yield put(fetchLatestTweetsSuccess(response?.data?.body?.Data));
     yield put(fetchScheduledTweets());
   } else {
-    console.error("no active twitter");
+    yield put(fetchLatestTweetsSuccess([]));
+    yield put(fetchInitialDataSuccess())
   }
 }
 
@@ -49,7 +50,7 @@ function* getScheduledTweets() {
 
   const response = yield call(doPost, {url: getScheduledTweetsEndpoint, payload, headers: {}, options: {}, baseUrl: BASE_URL});
 
-  yield put(fetchScheduledTweetsSuccess(response?.data));
+  yield put(fetchScheduledTweetsSuccess(response?.data?.body?.Data));
 }
 
 function* addAccount({ payload }) {
@@ -91,6 +92,10 @@ function* createTweet({ payload }) {
     twitterID: activeTwitterAccount.twitterID,
     ...payload
   }
+
+  const date = new Date(reqBody.tweetTime);
+  reqBody.tweetTime = date.getFullYear() +"-" + (date.getMonth() + 1) + "-" + (date.getDate()) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
   const response = yield call(doPost, {url: scheduleTweetEndpoint, payload: reqBody, headers: {}, options: {}, baseUrl: BASE_URL});
   yield put(fetchInitialData());
 }
