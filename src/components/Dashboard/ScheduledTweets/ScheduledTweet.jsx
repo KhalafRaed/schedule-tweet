@@ -12,25 +12,6 @@ const ScheduledTweet = ({ tweet, deleteScheduledTweet, fetchInitialData }) => {
     deleteScheduledTweet(tweet);
   };
 
-  useEffect(() => {
-
-    const tweetTime = new Date(tweet?.tweetTime).getTime();
-    const now = new Date().getTime();
-
-    const beforeTweet = tweetTime - now;
-
-    console.log("still = ", beforeTweet);
-
-    if (beforeTweet > 0) {
-      const timeoutId = setTimeout(() => {
-        fetchInitialData();
-      });
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  }, []);
-
   return (
       <div className="latest-tweet">
         <div className="content">

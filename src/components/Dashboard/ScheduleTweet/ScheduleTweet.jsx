@@ -45,6 +45,7 @@ const ScheduleForm = ({ visible, onClose, scheduleTweet }) => {
                               shrink: true,
                             }}
                         />
+                        <input type="file" />
                       </div>
                     </DialogContent>
                     <DialogActions>
